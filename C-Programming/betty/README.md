@@ -18,7 +18,7 @@ i can pretty much define my own rules/style but since i'm learning from ALX SE, 
   - [Header files](#header-files)
 
 - [Documentation](#documentation)
-  - [Functiomns](#functions)
+  - [Functions](#functions)
   - [Data Structures](#data-structures)
 
 ####**Coding Style**
