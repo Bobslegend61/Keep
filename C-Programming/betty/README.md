@@ -21,7 +21,7 @@ i can pretty much define my own rules/style but since i'm learning from ALX SE, 
   - [Functions](#functions)
   - [Data Structures](#data-structures)
 
-####**Coding Style**
+#### **Coding Style**
 
 - ##### Indentation
 
@@ -279,7 +279,7 @@ Uses an underscore naming convention just like PHP
      #endif /* _SAMPLE_HEADER_H_ */
   ```
 
-####**Documentation**
+#### **Documentation**
 
 - ###### Functions
   In order to keep your code maintainable and readable, you'll be asked to document every single function of all your source files.
