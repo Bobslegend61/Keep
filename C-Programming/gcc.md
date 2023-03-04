@@ -42,7 +42,7 @@ This is a collection of program that compiles source code for different programm
   ```sh
   gcc -S main.c -o c
   ```
-- `-C` - Get the assembly code only
+- `-C` - Get the compiled code only
   To get compiled code without any linking, all you have to do is use the `-C` flag.
   ```bash
   gcc -C main.c -o c
