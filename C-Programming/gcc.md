@@ -42,10 +42,10 @@ This is a collection of program that compiles source code for different programm
   ```sh
   gcc -S main.c -o c
   ```
-- `-C` - Get the compiled code only
-  To get compiled code without any linking, all you have to do is use the `-C` flag.
+- `-c` - Get the compiled code only
+  To get compiled code without any linking, all you have to do is use the `-c` flag.
   ```bash
-  gcc -C main.c -o c
+  gcc -c main.c -o c
   ```
 - `-save-temps` - Produce all the intermediate files using -save-temps
   Previously, I explained how you can get the pre-processed, assembly, and compiled output but what if I tell you that you can have all of them at once?
