@@ -3,8 +3,6 @@
 
 int main (void)
 {
-	char *num = "450";
-
-	write(1, num, 3);
+	printf("%i5\n", 345);
 	return 0;
 }
