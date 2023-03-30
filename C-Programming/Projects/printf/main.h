@@ -23,11 +23,12 @@ int fmtr_s(va_list ap);
 int fmtr_c(va_list ap);
 int fmtr_pct(va_list ap);
 int fmtr_int(va_list ap);
-int fmtr_d(va_list ap);
+int fmtr_bnry(va_list ap);
 int (*get_fmtr_func(char c))(va_list ap);
 int _printf(const char *format, ...);
 
 /* UTILITY FUNCTION DECLARATIONS */
-void rev_str(char *, int len);
+void rev_str(char *str, int len);
+int is_ngtv(int num);
 
 #endif /* _MAIN_H */

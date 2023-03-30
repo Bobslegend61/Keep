@@ -16,11 +16,11 @@ size_t _str_len(const char *str)
 }
 
 /**
- * add_nede_end - adds a node to end of a linked list
+ * add_node_end - adds a node to end of a linked list
  * @head: pointer to pointer to head of the list
  * @str: data to add
  *
- * Return: pointer to the new node
+ * Return: pointer to the new element (new head)
  */
 list_t *add_node_end(list_t **head, const char *str)
 {

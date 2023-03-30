@@ -15,6 +15,8 @@ int (*get_fmtr_func(char c))(va_list ap)
 		{"s", fmtr_s },
 		{"%", fmtr_pct},
 		{"i", fmtr_int},
+		{"d", fmtr_int},
+		{"b", fmtr_bnry},
 		{NULL, NULL}
 	};
 

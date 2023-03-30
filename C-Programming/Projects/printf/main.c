@@ -10,39 +10,14 @@ int main(void)
 	int len;
 	int len2;
 
-	len = _printf("Let's try to printf a simple sentence.\n");
-	len2 = printf("Let's try to printf a simple sentence.\n");
-	printf("%d - %d\n", len, len2);
-
-	_printf("Unknown:[%r]\n");
-
-	len = _printf("Percent:[%%]\n");
-	len2 = printf("Percent:[%%]\n");
-	printf("Len:[%d]\n", len);
-	printf("Len:[%d]\n", len2);
-
-	len = _printf("Character:[%c]\n", 'H');
-	len2 = printf("Character:[%c]\n", 'H');
-	printf("Len:[%d]\n", len);
-	printf("Len:[%d]\n", len2);
-
-	len = _printf("String:[%s]\n", "I am a string !");
-	len2 = printf("String:[%s]\n", "I am a string !");
-	printf("Len:[%d]\n", len);
-	printf("Len:[%d]\n", len2);
-
-	len = _printf("Integer:[%i]\n", 452);
-	len2 = printf("Integer:[%i]\n", 452);
-	printf("Len:[%d]\n", len);
-	printf("Len:[%d]\n", len2);
-
-	len = _printf("Integer:[%i]\n", 5);
-	len2 = printf("Integer:[%i]\n", 5);
-	printf("Len:[%d]\n", len);
-	printf("Len:[%d]\n", len2);
-
-	len = _printf("Integer:[%i]\n", 45245503/2);
-	len2 = printf("Integer:[%i]\n", 45245503/2);
-	printf("Len:[%d]\n", len); 
-	printf("Len:[%d]\n", len2);
+	len = _printf("%b\n", 98);
+	_printf("%d\n", len);
+	len = _printf("%b\n", 8);
+	_printf("%d\n", len);
+	_printf("[%%]\n");
+	len = _printf("Char: %c and Int: %i\n", 'k', 90);
+	len2 = printf("Char: %c and Int: %i\n", 'k', 90);
+	_printf("%i - %i\n", len, len2);
+	printf("%i - %i\n", len, len2);
+	return (0);
 }

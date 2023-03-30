@@ -25,7 +25,7 @@ int fmtr_s(va_list ap)
 int fmtr_c(va_list ap)
 {
 	int p = va_arg(ap, int);
-
+	
 	return (write(1, &p, 1));
 }
 
@@ -37,7 +37,7 @@ int fmtr_c(va_list ap)
  */
 int fmtr_pct(va_list ap)
 {
-	int p = 37;
+	int p = va_arg(ap, int);;
 
 	return (write(1, &p, 1));
 }
@@ -54,7 +54,10 @@ int fmtr_int(va_list ap)
 	int i = 0;
 	char *p = (char *)malloc(1);
 	int res;
+	int has_ngtv = is_ngtv(v);
 
+	if (has_ngtv)
+		v = v * -1;
 	while (v >= 10)
 	{
 		*(p + i) = (v % 10) + '0';
@@ -63,19 +66,38 @@ int fmtr_int(va_list ap)
 	}
 	*(p + i) = v + '0';
 	i += 1;
+	if (has_ngtv)
+	{
+		*(p + i) = '-';
+		i += 1;
+	}
 	rev_str(p, i);
 	res = write(1, p, i);
 	free(p);
-	return res;
+	return (res);
 }
 
 /**
- * fmtr_d - Prints format as a decimal
+ * fmtr_bnry - Function to convert unsigned int to binary
  * @ap: Current argument from va_list
  *
- * Return: Length of decimal
+ * Return: Length of binary digits
  */
-//int fmtr_d(va_list ap)
-//{
+int fmtr_bnry(va_list ap)
+{
+	unsigned int v = va_arg(ap, unsigned int);
+	char *p = (char *)malloc(1);
+	int c = 0;
+	int res;
 	
-//}
+	while (v > 0)
+	{
+		*(p + c) = (v % 2) + '0';
+		v /= 2;
+		c++;
+	}
+	rev_str(p, c);
+	res = write(1, p, c);
+	free(p);
+	return (res);
+}
