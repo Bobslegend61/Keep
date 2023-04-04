@@ -11,18 +11,14 @@ int (*get_fmtr_func(char c))(va_list ap)
 	int i = 0;
 
 	fmtr_t fmtrs[] = {
-		{"c", fmtr_c },
-		{"s", fmtr_s },
-		{"%", fmtr_pct},
-		{"i", fmtr_int},
-		{"d", fmtr_int},
-		{"b", fmtr_bnry},
+		{'c', fmtr_c },
+		{'s', fmtr_s },
 		{NULL, NULL}
 	};
 
 	while ((fmtrs + i)->c != NULL)
 	{
-		if (*(fmtrs + i)->c == c)
+		if ((fmtrs + i)->c == c)
 			break;
 		i++;
 	}
