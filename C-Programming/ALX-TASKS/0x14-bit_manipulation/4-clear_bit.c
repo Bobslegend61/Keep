@@ -12,7 +12,7 @@ int clear_bit(unsigned long int *n, unsigned int index)
 	unsigned long int s = sizeof(unsigned long int);
 	unsigned long int m;
 
-	if (index < 0 || index > ((s * 8) - 1))
+	if (index > ((s * 8) - 1))
 		return (-1);
 	m = ((*n >> index) & 1);
 	if (m == 1)
