@@ -1,58 +1,87 @@
 #include "main.h"
 
 /**
+ * hndl_err - Prints error to STDOUT
+ * @code: Error code to exit with
+ * @which: Signifies file error is associated with
+ * @fmt: Formatter
+ *
+ * Return: Nothing to return
+ */
+void hndl_err(int code, int which, char *fmt, ...)
+{
+	va_list argptr;
+	int d;
+	char *s;
+	
+	if (fmt == NULL)
+	{
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+	}
+	else
+	{
+		va_start(argptr, fmt);
+		while (*fmt)
+		{
+			if (*fmt == 's')
+			{
+				s = va_arg(argptr, char *);
+				if (which == 1)
+				{
+					dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", s);
+				}
+				else
+				{
+					dprintf(STDERR_FILENO, "Error: Can't write to %s\n", s);
+				}
+				break;
+			}
+			if (*fmt == 'd')
+			{
+				d = va_arg(argptr, int);
+				dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", d);
+				break;
+			}
+			fmt++;
+		}
+		va_end(argptr);
+	}
+	exit(code);
+}
+
+/**
  * main - Copy file from one file to another
  * @argc: Argument count
  * @argv: Arguments pointer
  *
  * Retune: 0
  */
-int main(int argc, char **argv)
+int main(int ac, char **av)
 {
-	int fd_from;
-	int fd_to;
-	char *buffer;
-	ssize_t r_count, w_count, c_fd_from, c_fd_to;
+	int fd1, fd2;
+	ssize_t rc, wc, c1, c2;
+	char buffer[BUFFER_SIZE];
 
-	if (argc != 3)
+	if (ac != 3)
+		hndl_err(97, 0, NULL);
+	fd1 = open(av[1], O_RDONLY);
+	fd2 = open(av[2], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+	if (fd1 == -1 || fd2 == -1)
+		hndl_err(fd1 == -1 ? 98 : 99, fd1 == -1 ? 1 : 2, "s", av[1]);
+	
+	rc = read(fd1, buffer, BUFFER_SIZE);
+	while(rc > 0)
 	{
-		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
-		exit(97);
+		wc = write(fd2, &buffer, rc);
+		if (wc == -1)
+			hndl_err(99, 2, "s", av[2]);
+		rc = read(fd1, buffer, BUFFER_SIZE);
 	}
-	fd_from = open(argv[1], O_RDONLY);
-	if (fd_from == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't open from file %s\n", argv[1]);
-		exit(98);
-	}
-	buffer = malloc(sizeof(char) * BUFFER_SIZE);
-	r_count = read(fd_from, buffer, (sizeof(char) * BUFFER_SIZE));
-	fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC | O_APPEND, 664);
-	if (fd_to == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't open to file %s\n", argv[2]);
-		exit(99);
-	}
-	while (r_count == BUFFER_SIZE)
-	{
-		w_count = write(fd_to, buffer, (sizeof(char) * BUFFER_SIZE));
-		if (w_count == -1)
-		{
-			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-			exit(99);
-		}
-		r_count = read(fd_from, buffer, (sizeof(char) * BUFFER_SIZE));
-	}
-	if (r_count == -1)
-	{
-		dprintf(STDERR_FILENO, "Can't read from file %s\n", argv[1]);
-	}
-	c_fd_from = close(fd_from);
-	c_fd_to = close(fd_to);
-	if (c_fd_from == -1 || c_fd_to == -1)
-	{
-		dprintf(STDERR_FILENO, "Can't close fd %d", c_fd_from == -1 ? fd_from : fd_to);
-	}
-	free(buffer);
+	if (rc == -1)
+		hndl_err(98, 1, "s",  av[1]);
+	c1 = close(fd1);
+	c2 = close(fd2);
+	if (c1 == -1 || c2 == -1)
+		hndl_err(100, 0, "d", c1 == -1 ? c1 : c2);
 	return (0);
 }
