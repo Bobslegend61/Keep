@@ -13,7 +13,7 @@ void hndl_err(int code, int which, char *fmt, ...)
 	va_list argptr;
 	int d;
 	char *s;
-	
+
 	if (fmt == NULL)
 	{
 		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
@@ -51,10 +51,10 @@ void hndl_err(int code, int which, char *fmt, ...)
 
 /**
  * main - Copy file from one file to another
- * @argc: Argument count
- * @argv: Arguments pointer
+ * @ac: Argument count
+ * @av: Arguments pointer
  *
- * Retune: 0
+ * Return: 0
  */
 int main(int ac, char **av)
 {
@@ -65,12 +65,14 @@ int main(int ac, char **av)
 	if (ac != 3)
 		hndl_err(97, 0, NULL);
 	fd1 = open(av[1], O_RDONLY);
-	fd2 = open(av[2], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+	fd2 = open(av[2],
+			O_WRONLY | O_CREAT | O_TRUNC,
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH
+			);
 	if (fd1 == -1 || fd2 == -1)
 		hndl_err(fd1 == -1 ? 98 : 99, fd1 == -1 ? 1 : 2, "s", av[1]);
-	
 	rc = read(fd1, buffer, BUFFER_SIZE);
-	while(rc > 0)
+	while (rc > 0)
 	{
 		wc = write(fd2, &buffer, rc);
 		if (wc == -1)
